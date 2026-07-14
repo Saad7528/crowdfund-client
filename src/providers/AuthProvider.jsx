@@ -227,7 +227,7 @@ export const AuthProvider = ({ children }) => {
       }).join(''));
       const decoded = JSON.parse(jsonPayload);
 
-      await fetch(`${API_URL}/users/social`, {
+      const response = await fetch(`${API_URL}/users/social`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -239,10 +239,18 @@ export const AuthProvider = ({ children }) => {
           role 
         })
       });
+
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || "Failed to sync Google account to database");
+      }
       
       const token = await getJwtToken(decoded.email);
       if (token) {
         await syncUserSession(decoded.email, token);
+      } else {
+        setLoading(false);
+        throw new Error("Failed to generate secure session token from backend");
       }
       return decoded;
     } catch (error) {
