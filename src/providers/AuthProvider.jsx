@@ -217,6 +217,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogleCredential = async (credentialToken, role = 'Supporter') => {
+    setLoading(true);
+    try {
+      const base64Url = credentialToken.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      const decoded = JSON.parse(jsonPayload);
+
+      await fetch(`${API_URL}/users/social`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          name: decoded.name, 
+          email: decoded.email, 
+          photoURL: decoded.picture || '', 
+          role 
+        })
+      });
+      
+      const token = await getJwtToken(decoded.email);
+      if (token) {
+        await syncUserSession(decoded.email, token);
+      }
+      return decoded;
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
+  };
+
   // Logout
   const logout = async () => {
     setLoading(true);
@@ -289,6 +323,7 @@ export const AuthProvider = ({ children }) => {
     createUser,
     loginUser,
     loginWithGoogle,
+    loginWithGoogleCredential,
     logout,
     syncUserSession
   };

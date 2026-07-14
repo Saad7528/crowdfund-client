@@ -105,7 +105,7 @@ function App() {
               element={
                 <RoleRoute allowedRoles={['Supporter']}>
                   <PurchaseCredit />
-                </Route>
+                </RoleRoute>
               } 
             />
 
