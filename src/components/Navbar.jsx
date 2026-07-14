@@ -38,7 +38,7 @@ const Navbar = () => {
           </NavLink>
         )}
         <a 
-          href="https://github.com/s-m-amirulislamsaad/Crowdfunding-Platform-Client" 
+          href="https://github.com/Saad7528/crowdfund-client" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="landing-nav-link"
