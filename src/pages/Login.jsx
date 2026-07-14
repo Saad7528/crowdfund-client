@@ -157,11 +157,11 @@ const Login = () => {
           Don't have an account? <Link to="/register" className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-semibold">Register here</Link>
         </p>
 
-        <div className="mt-4 p-4 bg-white/2 border border-dashed border-border-color rounded-sm text-xs text-text-secondary flex flex-col gap-1 leading-relaxed">
+        {/* <div className="mt-4 p-4 bg-white/2 border border-dashed border-border-color rounded-sm text-xs text-text-secondary flex flex-col gap-1 leading-relaxed">
           <strong>Default Admin Credentials:</strong>
           <span>Email: <code className="text-primary">admin@crowdfund.com</code></span>
           <span>Password: <code className="text-primary">adminPassword</code></span>
-        </div>
+        </div> */}
       </div>
     </div>
   );
