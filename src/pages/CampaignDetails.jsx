@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
-import { Calendar, Target, DollarSign, Award, ShieldAlert, Heart, ArrowLeft } from 'lucide-react';
+import { Award, ShieldAlert, Heart, ArrowLeft } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -48,9 +48,9 @@ const CampaignDetails = () => {
 
   if (loading) {
     return (
-      <div className="spinner-container">
-        <div className="modern-spinner"></div>
-        <p className="loading-text">Loading campaign details...</p>
+      <div className="flex flex-col items-center justify-center gap-4 min-h-[300px]">
+        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-sm text-text-secondary">Loading campaign details...</p>
       </div>
     );
   }
@@ -191,156 +191,159 @@ const CampaignDetails = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 20px' }}>
+    <div className="max-w-7xl mx-auto my-10 px-4 md:px-8 w-full">
       
       {/* Back button */}
-      <Link to="/explore" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', marginBottom: '30px', fontWeight: 500 }}>
+      <Link to="/explore" className="inline-flex items-center gap-2 text-text-secondary hover:text-text-primary mb-8 font-semibold transition-colors duration-300">
         <ArrowLeft size={16} /> Back to Explore
       </Link>
 
       {/* Main Campaign Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.8fr 1.2fr', gap: '40px' }} className="stats-grid">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.8fr_1.2fr] gap-8 items-start">
         
         {/* Left Side: Campaign Media + Story */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        <div className="flex flex-col gap-8">
           
-          <div className="glass-panel" style={{ padding: '0', overflow: 'hidden' }}>
+          <div className="bg-bg-card border border-border-color rounded-md overflow-hidden shadow-xl backdrop-blur-md">
             <img 
               src={image_url || 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200'} 
               alt={title} 
-              style={{ width: '100%', maxHeight: '450px', objectFit: 'cover' }}
+              className="w-full max-h-[450px] object-cover"
             />
           </div>
 
-          <div className="glass-panel" style={{ textAlign: 'left' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <span className="badge badge-approved">{category}</span>
+          <div className="bg-bg-card border border-border-color rounded-md p-6 md:p-8 shadow-xl backdrop-blur-md flex flex-col gap-4">
+            <div className="flex justify-between items-center">
+              <span className="px-3 py-1 bg-primary/15 border border-primary/30 text-primary rounded-sm text-xs font-bold uppercase tracking-wider">{category}</span>
               {user && user.role === 'Supporter' && (
                 <button 
                   onClick={() => setShowReportModal(true)} 
-                  className="btn btn-secondary" 
-                  style={{ padding: '6px 12px', fontSize: '0.8rem', color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.2)' }}
+                  className="px-3 py-1.5 border border-danger/20 bg-transparent text-danger hover:bg-danger/5 rounded-sm text-xs font-bold transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
                 >
                   <ShieldAlert size={14} /> Report Campaign
                 </button>
               )}
             </div>
 
-            <h1 style={{ fontSize: '2.5rem', marginBottom: '15px' }}>{title}</h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '30px' }}>
-              Launched by <strong>{creator_name}</strong> ({creator_email})
+            <h1 className="text-3xl font-extrabold tracking-tight mt-2">{title}</h1>
+            <p className="text-sm text-text-secondary">
+              Launched by <strong className="text-text-primary">{creator_name}</strong> ({creator_email})
             </p>
 
-            <h3 style={{ fontSize: '1.3rem', marginBottom: '15px', color: '#fff' }}>Campaign Story</h3>
-            <p style={{ color: 'var(--text-secondary)', whiteSpace: 'pre-wrap', lineHeight: '1.8' }}>{story}</p>
+            <hr className="border-border-color my-2" />
+
+            <h3 className="text-lg font-bold text-text-primary">Campaign Story</h3>
+            <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">{story}</p>
           </div>
 
         </div>
 
         {/* Right Side: Progress Stats + Pledge Widget */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        <div className="flex flex-col gap-8">
           
           {/* Progress Widget */}
-          <div className="glass-panel" style={{ textAlign: 'left' }}>
-            <div style={{ marginBottom: '25px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '10px' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}>
+          <div className="bg-bg-card border border-border-color rounded-md p-6 md:p-8 shadow-xl backdrop-blur-md flex flex-col gap-6">
+            <div>
+              <div className="flex justify-between items-baseline mb-2">
+                <span className="text-3xl font-extrabold font-display text-accent">
                   {amount_raised}
                 </span>
-                <span style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                <span className="text-text-secondary text-xs">
                   raised of {funding_goal} goal
                 </span>
               </div>
-              <div className="campaign-progress-bar-bg" style={{ height: '8px' }}>
-                <div className="campaign-progress-bar-fill" style={{ width: `${percentRaised}%` }}></div>
+              <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden mb-2">
+                <div className="h-full bg-gradient-to-r from-primary to-secondary rounded-full" style={{ width: `${percentRaised}%` }}></div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+              <div className="flex justify-between text-text-secondary text-xs">
                 <span>{percentRaised}% Funded</span>
                 <span>{daysLeft} Days Left</span>
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', padding: '15px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', marginBottom: '25px' }}>
+            <div className="grid grid-cols-2 gap-4 border-y border-border-color py-4">
               <div>
-                <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Min Pledge</span>
-                <strong style={{ fontSize: '1.1rem' }}>{minimum_contribution} Credits</strong>
+                <span className="block text-[10px] text-text-muted uppercase tracking-wider">Min Pledge</span>
+                <strong className="text-sm text-text-primary">{minimum_contribution} Credits</strong>
               </div>
               <div>
-                <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Deadline Date</span>
-                <strong style={{ fontSize: '1.1rem' }}>{new Date(deadline).toLocaleDateString()}</strong>
+                <span className="block text-[10px] text-text-muted uppercase tracking-wider">Deadline Date</span>
+                <strong className="text-sm text-text-primary">{new Date(deadline).toLocaleDateString()}</strong>
               </div>
             </div>
 
             <div>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '10px' }}>
-                <Award size={16} /> Supporter Rewards
+              <span className="flex items-center gap-1.5 text-xs text-text-muted uppercase tracking-wider font-semibold mb-3">
+                <Award size={16} className="text-primary" /> Supporter Rewards
               </span>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', background: 'rgba(255,255,255,0.02)', padding: '15px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+              <p className="text-xs text-text-secondary bg-white/2 p-4 rounded-sm border border-border-color leading-relaxed">
                 {reward_info || "No rewards listed for this campaign."}
               </p>
             </div>
           </div>
 
           {/* Pledge Card */}
-          <div className="glass-panel" style={{ textAlign: 'left' }}>
-            <h3 style={{ fontSize: '1.2rem', marginBottom: '15px' }}>Back This Project</h3>
+          <div className="bg-bg-card border border-border-color rounded-md p-6 md:p-8 shadow-xl backdrop-blur-md flex flex-col gap-4">
+            <h3 className="text-lg font-bold">Back This Project</h3>
             
             {contributionError && (
-              <div className="alert alert-error" style={{ fontSize: '0.85rem' }}>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-danger/10 border-danger/20 text-danger">
                 <ShieldAlert size={16} />
                 <span>{contributionError}</span>
               </div>
             )}
 
             {contributionSuccess && (
-              <div className="alert alert-success" style={{ fontSize: '0.85rem' }}>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-accent/10 border-accent/20 text-accent">
                 <Heart size={16} />
                 <span>{contributionSuccess}</span>
               </div>
             )}
 
             {isDeadlinePassed ? (
-              <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '20px 0' }}>
+              <div className="text-center text-text-muted py-6 text-sm">
                 This campaign has ended and is no longer accepting contributions.
               </div>
             ) : !user ? (
-              <div>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '20px' }}>
+              <div className="flex flex-col gap-4">
+                <p className="text-text-secondary text-sm">
                   Please login to support this project with your credits.
                 </p>
-                <Link to="/login" className="btn btn-primary" style={{ width: '100%' }}>
+                <Link 
+                  to="/login" 
+                  className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-sm transition-all duration-300 text-center cursor-pointer shadow-lg shadow-indigo-500/10"
+                >
                   Sign In to Contribute
                 </Link>
               </div>
             ) : user.role !== 'Supporter' ? (
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center', padding: '20px 0' }}>
+              <p className="text-text-muted text-xs text-center py-6">
                 Your current role is <strong>{user.role}</strong>. Only Supporters can contribute.
               </p>
             ) : (
-              <form onSubmit={handleContributionSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <div className="form-group" style={{ marginBottom: '0' }}>
-                  <label className="form-label">Contribution Amount (Credits)</label>
+              <form onSubmit={handleContributionSubmit} className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-xs font-semibold text-text-secondary">Contribution Amount (Credits)</label>
                   <input 
                     type="number" 
                     min={minimum_contribution}
                     placeholder={`Min. ${minimum_contribution}`}
                     value={contributionAmount}
                     onChange={(e) => setContributionAmount(e.target.value)}
-                    className="form-input"
+                    className="w-full px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm"
                     required
                   />
                 </div>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                <div className="flex justify-between text-xs text-text-secondary">
                   <span>Available Balance:</span>
-                  <span style={{ fontWeight: 700, color: 'var(--color-accent)' }}>{user.credits} Credits</span>
+                  <span className="font-bold text-accent">{user.credits} Credits</span>
                 </div>
 
                 <button 
                   type="submit" 
-                  className="btn btn-primary" 
+                  className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-sm transition-all duration-300 text-center cursor-pointer shadow-lg shadow-indigo-500/10 disabled:opacity-50"
                   disabled={submittingContribution}
-                  style={{ width: '100%' }}
                 >
                   {submittingContribution ? 'Pledging...' : 'Submit Contribution'}
                 </button>
@@ -354,51 +357,51 @@ const CampaignDetails = () => {
 
       {/* Report Modal */}
       {showReportModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <h3 className="modal-title">Report Fraudulent Campaign</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
+        <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-bg-card border border-border-color rounded-md p-8 max-w-md w-full shadow-2xl relative flex flex-col gap-4">
+            <h3 className="text-lg font-bold">Report Fraudulent Campaign</h3>
+            <p className="text-xs text-text-secondary leading-relaxed">
               Please describe why you believe this campaign violates platform rules or is fraudulent.
             </p>
 
             {reportError && (
-              <div className="alert alert-error" style={{ fontSize: '0.85rem' }}>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-danger/10 border-danger/20 text-danger">
                 <ShieldAlert size={16} />
                 <span>{reportError}</span>
               </div>
             )}
 
             {reportSuccess && (
-              <div className="alert alert-success" style={{ fontSize: '0.85rem' }}>
+              <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-accent/10 border-accent/20 text-accent">
                 <Heart size={16} />
                 <span>{reportSuccess}</span>
               </div>
             )}
 
-            <form onSubmit={handleReportSubmit}>
-              <div className="form-group">
-                <label className="form-label">Reason for Report</label>
+            <form onSubmit={handleReportSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="text-xs font-semibold text-text-secondary">Reason for Report</label>
                 <textarea 
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value)}
-                  className="form-textarea"
+                  className="w-full h-24 px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm resize-none"
                   placeholder="Provide details about suspicious links, plagiarism, or fraudulent claims..."
                   required
                 />
               </div>
 
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <div className="flex gap-2 justify-end mt-2">
                 <button 
                   type="button" 
                   onClick={() => setShowReportModal(false)} 
-                  className="btn btn-secondary"
+                  className="px-4 py-2 border border-border-color bg-transparent text-text-primary text-sm font-semibold rounded-sm hover:bg-white/5 transition-all duration-300 cursor-pointer"
                   disabled={submittingReport}
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit" 
-                  className="btn btn-danger"
+                  className="px-4 py-2 bg-danger hover:bg-danger/80 text-white text-sm font-semibold rounded-sm transition-all duration-300 cursor-pointer disabled:opacity-50"
                   disabled={submittingReport}
                 >
                   {submittingReport ? 'Submitting...' : 'Submit Report'}

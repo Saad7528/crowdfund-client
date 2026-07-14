@@ -98,114 +98,127 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
+    <div className="flex flex-col gap-24 pb-16">
       
       {/* 1. Animated Hero Section */}
-      <section className="hero-slider-section">
+      <section className="relative w-full h-[600px] overflow-hidden bg-bg-dark">
         {slides.map((slide, index) => (
           <div 
             key={index} 
-            className="hero-slide"
+            className="absolute inset-0 bg-cover bg-center flex items-center px-4 md:px-12 lg:px-24 transition-opacity duration-1000 ease-in-out"
             style={{ 
-              backgroundImage: `url(${slide.bg})`,
+              backgroundImage: `linear-gradient(rgba(9, 9, 11, 0.4), rgba(9, 9, 11, 0.7)), url(${slide.bg})`,
               opacity: currentSlide === index ? 1 : 0,
-              position: index === 0 ? 'relative' : 'absolute',
-              top: 0, left: 0, right: 0, bottom: 0,
-              transition: 'opacity 1s ease-in-out',
               zIndex: currentSlide === index ? 1 : 0
             }}
           >
-            <div className="hero-content">
-              <h1 className="gradient-text">{slide.title}</h1>
-              <p>{slide.subtitle}</p>
-              <Link to={slide.link} className="btn btn-primary btn-lg">
+            <div className="max-w-2xl bg-bg-dark/60 backdrop-blur-md border border-border-color p-8 rounded-md shadow-2xl">
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight font-display mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">{slide.title}</h1>
+              <p className="text-md md:text-lg text-text-secondary mb-8 leading-relaxed">{slide.subtitle}</p>
+              <Link 
+                to={slide.link} 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-white font-semibold rounded-sm transition-all duration-300 shadow-lg shadow-indigo-500/10 cursor-pointer"
+              >
                 {slide.cta} <ArrowRight size={18} />
               </Link>
             </div>
           </div>
         ))}
+        
         {/* Slider Controls */}
         <button 
           onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-          className="social-icon-btn" 
-          style={{ position: 'absolute', left: '30px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, cursor: 'pointer' }}
+          className="absolute left-6 top-1/2 -translate-y-1/2 p-2 border border-border-color bg-bg-dark/80 backdrop-blur-md rounded-sm hover:bg-white/5 transition-all duration-300 text-text-primary z-10 cursor-pointer"
         >
           <ChevronLeft size={24} />
         </button>
         <button 
           onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-          className="social-icon-btn" 
-          style={{ position: 'absolute', right: '30px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, cursor: 'pointer' }}
+          className="absolute right-6 top-1/2 -translate-y-1/2 p-2 border border-border-color bg-bg-dark/80 backdrop-blur-md rounded-sm hover:bg-white/5 transition-all duration-300 text-text-primary z-10 cursor-pointer"
         >
           <ChevronRight size={24} />
         </button>
       </section>
 
-      {/* 2. Platform Impact in Numbers Section (Extra 1) */}
-      <section className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-details">
-              <h3>Total Funds Raised</h3>
-              <div className="stat-number gradient-text">24,800+</div>
+      {/* 2. Platform Impact in Numbers Section */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-center justify-between bg-bg-card border border-border-color rounded-md p-6 shadow-xl backdrop-blur-md">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Total Funds Raised</h3>
+              <div className="text-3xl font-extrabold font-display bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">24,800+</div>
             </div>
-            <div className="stat-icon-box purple"><Coins size={24} /></div>
+            <div className="w-12 h-12 rounded-sm flex items-center justify-center bg-primary/10 border border-primary/20 text-primary">
+              <Coins size={24} />
+            </div>
           </div>
 
-          <div className="stat-card">
-            <div className="stat-details">
-              <h3>Active Backers</h3>
-              <div className="stat-number">1,420+</div>
+          <div className="flex items-center justify-between bg-bg-card border border-border-color rounded-md p-6 shadow-xl backdrop-blur-md">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Active Backers</h3>
+              <div className="text-3xl font-extrabold font-display text-text-primary">1,420+</div>
             </div>
-            <div className="stat-icon-box pink"><Users size={24} /></div>
+            <div className="w-12 h-12 rounded-sm flex items-center justify-center bg-secondary/10 border border-secondary/20 text-secondary">
+              <Users size={24} />
+            </div>
           </div>
 
-          <div className="stat-card">
-            <div className="stat-details">
-              <h3>Countries Supported</h3>
-              <div className="stat-number">14+</div>
+          <div className="flex items-center justify-between bg-bg-card border border-border-color rounded-md p-6 shadow-xl backdrop-blur-md">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Countries Supported</h3>
+              <div className="text-3xl font-extrabold font-display text-text-primary">14+</div>
             </div>
-            <div className="stat-icon-box green"><Globe size={24} /></div>
+            <div className="w-12 h-12 rounded-sm flex items-center justify-center bg-accent/10 border border-accent/20 text-accent">
+              <Globe size={24} />
+            </div>
           </div>
 
-          <div className="stat-card">
-            <div className="stat-details">
-              <h3>Fund Success Rate</h3>
-              <div className="stat-number">94.8%</div>
+          <div className="flex items-center justify-between bg-bg-card border border-border-color rounded-md p-6 shadow-xl backdrop-blur-md">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Fund Success Rate</h3>
+              <div className="text-3xl font-extrabold font-display text-text-primary">94.8%</div>
             </div>
-            <div className="stat-icon-box yellow"><Zap size={24} /></div>
+            <div className="w-12 h-12 rounded-sm flex items-center justify-center bg-warning/10 border border-warning/20 text-warning">
+              <Zap size={24} />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. How It Works Section (Extra 2) */}
-      <section className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
-        <div className="section-header">
-          <h2>How It Works</h2>
-          <p>Support amazing campaigns or start raising funds in three quick steps</p>
+      {/* 3. How It Works Section */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 w-full text-center flex flex-col gap-12">
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
+          <h2 className="text-3xl font-bold tracking-tight">How It Works</h2>
+          <p className="text-text-secondary text-sm">Support amazing campaigns or start raising funds in three quick steps</p>
         </div>
 
-        <div className="stats-grid" style={{ marginTop: '40px' }}>
-          <div className="glass-panel" style={{ padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-            <div className="stat-icon-box purple" style={{ width: '60px', height: '60px' }}><Compass size={28} /></div>
-            <h3>1. Explore Visionary Projects</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col items-center text-center gap-4 bg-bg-card/40 border border-border-color rounded-md p-8 shadow-xl backdrop-blur-md">
+            <div className="w-14 h-14 rounded-sm flex items-center justify-center bg-primary/10 border border-primary/20 text-primary">
+              <Compass size={28} />
+            </div>
+            <h3 className="text-lg font-bold">1. Explore Visionary Projects</h3>
+            <p className="text-text-secondary text-sm leading-relaxed">
               Browse through multiple categories including Technology, Art, Community and Health. Find projects that capture your heart.
             </p>
           </div>
 
-          <div className="glass-panel" style={{ padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-            <div className="stat-icon-box pink" style={{ width: '60px', height: '60px' }}><Heart size={28} /></div>
-            <h3>2. Contribute Platform Credits</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+          <div className="flex flex-col items-center text-center gap-4 bg-bg-card/40 border border-border-color rounded-md p-8 shadow-xl backdrop-blur-md">
+            <div className="w-14 h-14 rounded-sm flex items-center justify-center bg-secondary/10 border border-secondary/20 text-secondary">
+              <Heart size={28} />
+            </div>
+            <h3 className="text-lg font-bold">2. Contribute Platform Credits</h3>
+            <p className="text-text-secondary text-sm leading-relaxed">
               Top up your balance securely via Stripe, select a campaign, enter your contribution amount, and pledge your credits.
             </p>
           </div>
 
-          <div className="glass-panel" style={{ padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-            <div className="stat-icon-box green" style={{ width: '60px', height: '60px' }}><ShieldCheck size={28} /></div>
-            <h3>3. Project Success & Withdrawals</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+          <div className="flex flex-col items-center text-center gap-4 bg-bg-card/40 border border-border-color rounded-md p-8 shadow-xl backdrop-blur-md">
+            <div className="w-14 h-14 rounded-sm flex items-center justify-center bg-accent/10 border border-accent/20 text-accent">
+              <ShieldCheck size={28} />
+            </div>
+            <h3 className="text-lg font-bold">3. Project Success & Withdrawals</h3>
+            <p className="text-text-secondary text-sm leading-relaxed">
               Creators receive approval from the admin and withdraw their raised credits to dollar accounts based on the platform rules.
             </p>
           </div>
@@ -213,43 +226,42 @@ const Home = () => {
       </section>
 
       {/* 4. Top Funded Campaigns Section */}
-      <section className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
-        <div className="section-header">
-          <h2>Top Funded Campaigns</h2>
-          <p>Visionary projects backed by our amazing community of supporters</p>
+      <section className="max-w-7xl mx-auto px-4 md:px-8 w-full flex flex-col gap-12">
+        <div className="text-center max-w-2xl mx-auto flex flex-col gap-3">
+          <h2 className="text-3xl font-bold tracking-tight">Top Funded Campaigns</h2>
+          <p className="text-text-secondary text-sm">Visionary projects backed by our community of backers</p>
         </div>
 
         {loading ? (
-          <div className="spinner-container" style={{ minHeight: '30vh' }}>
-            <div className="modern-spinner"></div>
+          <div className="flex justify-center items-center min-h-[250px]">
+            <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : topCampaigns.length > 0 ? (
-          <div className="campaign-grid">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {topCampaigns.map((campaign) => (
               <CampaignCard key={campaign._id} campaign={campaign} />
             ))}
           </div>
         ) : (
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '40px 0' }}>
+          <div className="text-center text-text-muted py-12">
             No campaigns have been approved yet. Check back soon!
           </div>
         )}
       </section>
 
-      {/* 5. Explore by Category Section (Extra 3) */}
-      <section className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', textAlign: 'center' }}>
-        <div className="section-header">
-          <h2>Browse By Category</h2>
-          <p>Find campaigns in specific areas you care about</p>
+      {/* 5. Explore by Category Section */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 w-full text-center flex flex-col gap-10">
+        <div className="max-w-2xl mx-auto flex flex-col gap-3">
+          <h2 className="text-3xl font-bold tracking-tight">Browse By Category</h2>
+          <p className="text-text-secondary text-sm">Find campaigns in specific areas you care about</p>
         </div>
         
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+        <div className="flex gap-4 justify-center flex-wrap">
           {['Technology', 'Art', 'Community', 'Health'].map((category) => (
             <Link 
               key={category} 
               to={`/explore?category=${category}`} 
-              className="btn btn-secondary"
-              style={{ padding: '16px 32px', borderRadius: '12px', fontSize: '1rem', border: '1px solid var(--border-color)', minWidth: '150px' }}
+              className="px-8 py-4 border border-border-color bg-bg-card/50 text-text-primary text-md font-semibold rounded-md hover:border-primary hover:text-primary transition-all duration-300 min-w-[150px] text-center cursor-pointer shadow-lg hover:shadow-indigo-500/5"
             >
               {category}
             </Link>
@@ -258,45 +270,38 @@ const Home = () => {
       </section>
 
       {/* 6. Testimonial Section */}
-      <section className="testimonials-section">
-        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="section-header">
-            <h2>Community Success Stories</h2>
-            <p>Listen to what our active backers and visionary creators say</p>
+      <section className="bg-[#0e0e12] border-y border-border-color py-20 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col gap-12">
+          <div className="text-center max-w-2xl mx-auto flex flex-col gap-3">
+            <h2 className="text-3xl font-bold tracking-tight">Community Success Stories</h2>
+            <p className="text-text-secondary text-sm">Listen to what our active backers and visionary creators say</p>
           </div>
 
-          <div className="testimonial-swiper-container">
-            <div className="testimonial-card glass-panel">
-              <p className="testimonial-quote">
+          <div className="max-w-2xl mx-auto w-full flex flex-col gap-6">
+            <div className="bg-bg-card border border-border-color rounded-md p-8 shadow-xl backdrop-blur-md text-center flex flex-col gap-6">
+              <p className="text-lg italic text-text-primary leading-relaxed">
                 "{testimonials[currentTestimonial].quote}"
               </p>
-              <div className="testimonial-author">
+              <div className="flex items-center justify-center gap-3">
                 <img 
                   src={testimonials[currentTestimonial].photo} 
                   alt={testimonials[currentTestimonial].name} 
-                  className="testimonial-avatar"
+                  className="w-12 h-12 rounded-full border border-border-color object-cover"
                 />
-                <div className="testimonial-details">
-                  <div className="testimonial-name">{testimonials[currentTestimonial].name}</div>
-                  <div className="testimonial-role">{testimonials[currentTestimonial].role}</div>
+                <div className="text-left">
+                  <div className="text-sm font-bold text-text-primary">{testimonials[currentTestimonial].name}</div>
+                  <div className="text-xs text-text-secondary">{testimonials[currentTestimonial].role}</div>
                 </div>
               </div>
             </div>
             
             {/* Dots */}
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '24px' }}>
+            <div className="flex gap-2 justify-center mt-4">
               {testimonials.map((_, idx) => (
                 <button 
                   key={idx}
                   onClick={() => setCurrentTestimonial(idx)}
-                  style={{ 
-                    width: '10px', 
-                    height: '10px', 
-                    borderRadius: '50%', 
-                    background: currentTestimonial === idx ? 'var(--color-primary)' : 'rgba(255,255,255,0.2)',
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
+                  className={`w-2.5 h-2.5 rounded-full border-none cursor-pointer transition-colors duration-300 ${currentTestimonial === idx ? 'bg-primary' : 'bg-white/20'}`}
                 />
               ))}
             </div>

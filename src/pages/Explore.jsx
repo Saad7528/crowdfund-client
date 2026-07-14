@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import CampaignCard from '../components/CampaignCard';
-import { Search, Grid, ListFilter } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -64,41 +64,40 @@ const Explore = () => {
     });
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 20px' }}>
+    <div className="max-w-7xl mx-auto my-10 px-4 md:px-8 w-full">
       
-      <div className="section-header">
-        <h2>Explore Campaigns</h2>
-        <p>Discover innovative tech, creative arts, and community causes from creators worldwide.</p>
+      <div className="text-center max-w-2xl mx-auto flex flex-col gap-3 mb-10">
+        <h2 className="text-3xl font-bold tracking-tight">Explore Campaigns</h2>
+        <p className="text-text-secondary text-sm">Discover innovative tech, creative arts, and community causes from creators worldwide.</p>
       </div>
 
       {/* Filter Toolbar */}
-      <div className="glass-panel" style={{ padding: '20px', marginBottom: '40px', display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="bg-bg-card border border-border-color rounded-md p-6 shadow-xl backdrop-blur-md flex flex-wrap gap-6 items-center justify-between mb-10">
         
         {/* Search */}
-        <div style={{ display: 'flex', alignItems: 'center', background: 'var(--bg-input)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '6px 12px', flexGrow: 1, maxWidth: '400px', minWidth: '250px' }}>
-          <Search size={18} style={{ color: 'var(--text-muted)', marginRight: '8px' }} />
+        <div className="flex items-center bg-bg-input border border-border-color rounded-sm px-4 py-2.5 w-full md:max-w-md">
+          <Search size={18} className="text-text-muted mr-2" />
           <input 
             type="text" 
             placeholder="Search campaigns..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ background: 'transparent', border: 'none', color: '#fff', outline: 'none', width: '100%', fontSize: '0.95rem' }}
+            className="bg-transparent border-none text-text-primary outline-none w-full text-sm"
           />
         </div>
 
         {/* Filters */}
-        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <div className="flex gap-4 flex-wrap items-center">
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Category:</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-secondary font-semibold uppercase tracking-wider">Category:</span>
             <select 
               value={categoryFilter}
               onChange={(e) => {
                 setCategoryFilter(e.target.value);
                 setSearchParams(e.target.value === 'All' ? {} : { category: e.target.value });
               }}
-              className="form-select"
-              style={{ padding: '8px 12px', width: 'auto', fontSize: '0.85rem' }}
+              className="px-3 py-2 bg-bg-input border border-border-color rounded-sm text-text-primary text-sm focus:outline-none focus:border-primary cursor-pointer"
             >
               <option value="All">All Categories</option>
               <option value="Technology">Technology</option>
@@ -108,13 +107,12 @@ const Explore = () => {
             </select>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Sort By:</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-text-secondary font-semibold uppercase tracking-wider">Sort By:</span>
             <select 
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="form-select"
-              style={{ padding: '8px 12px', width: 'auto', fontSize: '0.85rem' }}
+              className="px-3 py-2 bg-bg-input border border-border-color rounded-sm text-text-primary text-sm focus:outline-none focus:border-primary cursor-pointer"
             >
               <option value="newest">Recently Added</option>
               <option value="deadline">Closest Deadline</option>
@@ -129,20 +127,20 @@ const Explore = () => {
 
       {/* Campaigns Grid */}
       {loading ? (
-        <div className="spinner-container">
-          <div className="modern-spinner"></div>
-          <p className="loading-text">Loading campaigns...</p>
+        <div className="flex flex-col items-center justify-center gap-4 min-h-[300px]">
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm text-text-secondary">Loading campaigns...</p>
         </div>
       ) : filteredCampaigns.length > 0 ? (
-        <div className="campaign-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCampaigns.map((campaign) => (
             <CampaignCard key={campaign._id} campaign={campaign} />
           ))}
         </div>
       ) : (
-        <div className="glass-panel" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-          <h3>No campaigns found</h3>
-          <p style={{ marginTop: '10px' }}>Try adjusting your filters or search keywords.</p>
+        <div className="bg-bg-card border border-border-color rounded-md p-16 text-center text-text-secondary">
+          <h3 className="text-lg font-bold">No campaigns found</h3>
+          <p className="text-sm mt-2 text-text-muted">Try adjusting your filters or search keywords.</p>
         </div>
       )}
 

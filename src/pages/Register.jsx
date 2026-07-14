@@ -186,103 +186,103 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card glass-panel">
-        <h2 className="auth-title">Create Account</h2>
-        <p className="auth-subtitle">Join NovaFund Crowdfunding Platform</p>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-bg-card border border-border-color rounded-md p-8 shadow-xl backdrop-blur-md flex flex-col gap-6">
+        <h2 className="text-2xl font-bold tracking-tight text-center font-display">Create Account</h2>
+        <p className="text-sm text-text-secondary text-center -mt-2">Join NovaFund Crowdfunding Platform</p>
 
         {error && (
-          <div className="alert alert-error">
+          <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-danger/10 border-danger/20 text-danger">
             <AlertCircle size={18} />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="alert alert-success">
+          <div className="flex items-center gap-2 px-4 py-3 rounded-sm border text-xs bg-accent/10 border-accent/20 text-accent">
             <CheckCircle size={18} />
             <span>{success}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Full Name</label>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-semibold text-text-secondary">Full Name</label>
             <input 
               type="text" 
               name="name" 
               value={formData.name} 
               onChange={handleInputChange} 
-              className="form-input" 
+              className="w-full px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm" 
               placeholder="e.g. John Doe"
               required 
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Email Address</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-semibold text-text-secondary">Email Address</label>
             <input 
               type="email" 
               name="email" 
               value={formData.email} 
               onChange={handleInputChange} 
-              className="form-input" 
+              className="w-full px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm" 
               placeholder="e.g. john@example.com"
               required 
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Password</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-semibold text-text-secondary">Password</label>
             <input 
               type="password" 
               name="password" 
               value={formData.password} 
               onChange={handleInputChange} 
-              className="form-input" 
+              className="w-full px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm" 
               placeholder="••••••••"
               required 
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', marginTop: '4px' }}>
+            <span className="text-[10px] text-text-muted">
               Min 6 characters, at least 1 uppercase and 1 special symbol.
             </span>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Profile Image Upload (imgBB)</label>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <label className="btn btn-secondary" style={{ padding: '10px 15px', fontSize: '0.85rem', cursor: 'pointer' }}>
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-semibold text-text-secondary">Profile Image Upload (imgBB)</label>
+            <div className="flex gap-3 items-center">
+              <label className="px-4 py-2 border border-border-color bg-transparent text-text-primary text-xs font-semibold rounded-sm hover:bg-white/5 transition-all duration-300 flex items-center gap-1.5 cursor-pointer">
                 <Upload size={16} /> Choose File
                 <input 
                   type="file" 
                   accept="image/*" 
                   onChange={handleFileChange} 
-                  style={{ display: 'none' }} 
+                  className="hidden" 
                 />
               </label>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <span className="text-xs text-text-secondary truncate max-w-[200px]">
                 {imageFile ? imageFile.name : 'No file selected'}
               </span>
             </div>
-            <div style={{ margin: '12px 0 6px 0', textSelf: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>or enter image link</div>
+            <div className="text-center text-[10px] uppercase text-text-muted my-1">or enter image link</div>
             <input 
               type="url" 
               name="photoURL" 
               value={formData.photoURL} 
               onChange={handleInputChange} 
-              className="form-input" 
+              className="w-full px-4 py-2.5 bg-bg-input border border-border-color rounded-sm text-text-primary focus:outline-none focus:border-primary transition-all duration-300 text-sm disabled:opacity-50" 
               placeholder="https://example.com/avatar.jpg"
               disabled={!!imageFile}
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Role</label>
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-semibold text-text-secondary">Role</label>
             <select 
               name="role" 
               value={formData.role} 
               onChange={handleInputChange} 
-              className="form-select"
+              className="w-full px-3 py-2 bg-bg-input border border-border-color rounded-sm text-text-primary text-sm focus:outline-none focus:border-primary cursor-pointer"
             >
               <option value="Supporter">Supporter (Starts with 50 credits)</option>
               <option value="Creator">Creator (Starts with 20 credits)</option>
@@ -291,21 +291,22 @@ const Register = () => {
 
           <button 
             type="submit" 
-            className="btn btn-primary" 
-            style={{ width: '100%', padding: '14px', marginTop: '10px' }}
+            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-sm transition-all duration-300 text-center cursor-pointer shadow-lg shadow-indigo-500/10 flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
             disabled={submitting || uploadingImage}
           >
-            {(submitting || uploadingImage) ? <Loader size={20} className="modern-spinner" /> : 'Register'}
+            {(submitting || uploadingImage) ? <Loader size={18} className="animate-spin" /> : 'Register'}
           </button>
         </form>
 
-        <div className="auth-divider">or signup using</div>
+        <div className="flex items-center justify-center my-2 text-[10px] uppercase tracking-wider text-text-muted before:content-[''] before:flex-1 before:h-px before:bg-border-color before:mr-4 after:content-[''] after:flex-1 after:h-px after:bg-border-color after:ml-4">
+          or signup using
+        </div>
 
         {import.meta.env.VITE_GOOGLE_CLIENT_ID ? (
-          <div id="google-signup-btn-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', minHeight: '40px' }}></div>
+          <div id="google-signup-btn-container" className="flex justify-center mt-1 min-h-[40px]"></div>
         ) : (
-          <button onClick={handleGoogleSignIn} className="google-signin-btn">
-            <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg" style={{ marginRight: '8px' }}>
+          <button onClick={handleGoogleSignIn} className="w-full py-2.5 border border-border-color bg-transparent text-text-primary font-semibold rounded-sm hover:bg-white/5 transition-all duration-300 flex items-center justify-center gap-2 text-sm cursor-pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
@@ -315,8 +316,8 @@ const Register = () => {
           </button>
         )}
 
-        <p style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-          Already have an account? <Link to="/login" className="gradient-text" style={{ fontWeight: 600 }}>Login here</Link>
+        <p className="text-center text-sm text-text-secondary">
+          Already have an account? <Link to="/login" className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary font-semibold">Login here</Link>
         </p>
       </div>
     </div>
