@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './providers/AuthProvider';
+import NotFound from './pages/NotFound';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -59,7 +61,8 @@ const DashboardIndex = () => {
 
 function App() {
   return (
-    <AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
       <BrowserRouter>
         <Routes>
           {/* Public Layout */}
@@ -197,10 +200,11 @@ function App() {
           </Route>
 
           {/* Catch-all fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
