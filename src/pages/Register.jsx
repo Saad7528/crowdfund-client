@@ -47,7 +47,7 @@ const Register = () => {
 
       window.google.accounts.id.renderButton(
         document.getElementById("google-signup-btn-container"),
-        { theme: "outline", size: "large", width: 340 }
+        { theme: "filled_black", size: "large", width: 340 }
       );
     }
   }, [navigate, formData.role, loginWithGoogleCredential]);

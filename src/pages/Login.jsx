@@ -40,7 +40,7 @@ const Login = () => {
 
       window.google.accounts.id.renderButton(
         document.getElementById("google-signin-btn-container"),
-        { theme: "outline", size: "large", width: 340 }
+        { theme: "filled_black", size: "large", width: 340 }
       );
     }
   }, [navigate, from, loginWithGoogleCredential]);
